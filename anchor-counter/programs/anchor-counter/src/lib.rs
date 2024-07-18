@@ -11,6 +11,7 @@ pub mod anchor_counter {
     counter.count = 0;
     msg!("Counter Account Created");
     msg!("Current Count: {}", counter.count);
+
     Ok(())
   }
 
@@ -19,6 +20,14 @@ pub mod anchor_counter {
     msg!("Previous counter: {}", counter.count);
     counter.count = counter.count.checked_add(1).unwrap();
     msg!("Counter incremented. Current count: {}", counter.count);
+    Ok(())
+  }
+
+  pub fn decrement(_ctx: Context<Update>) -> Result<()> {
+    let counter = &mut _ctx.accounts.counter;
+    msg!("Previous counter: {}", counter.count);
+    counter.count = counter.count.checked_sub(1).unwrap();
+    msg!("Counter decremented. Current count: {}", counter.count);
     Ok(())
   }
 }
