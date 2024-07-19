@@ -1,5 +1,6 @@
 'use client';
 
+import type * as anchor from '@project-serum/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
 import Head from 'next/head';
 import { useState } from 'react';
@@ -9,7 +10,7 @@ import { Increment } from './components/Increment';
 import { Initialize } from './components/Initialize';
 
 export default function Home() {
-  const [counter, setCounter] = useState('');
+  const [counter, setCounter] = useState<anchor.Address>();
   const [transactionUrl, setTransactionUrl] = useState('');
   const wallet = useWallet();
 
@@ -29,7 +30,9 @@ export default function Home() {
         ) : (
           <div color='white'>Connect Wallet</div>
         )}
-        {transactionUrl && <button>View most recent transaction</button>}
+        {transactionUrl && (
+          <button onClick={() => console.warn(transactionUrl)}>View most recent transaction</button>
+        )}
       </div>
     </div>
   );

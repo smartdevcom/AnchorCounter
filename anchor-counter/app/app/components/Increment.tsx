@@ -1,3 +1,5 @@
+'use client';
+
 import * as anchor from '@project-serum/anchor';
 import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -20,27 +22,26 @@ export const Increment = ({
   const refreshCount = useCallback(
     async (program: anchor.Program) => {
       const counterAccount = await program.account.counter.fetch(counter);
-      const { count } = counterAccount;
-      setCount(count.toNumber());
+      setCount(counterAccount.count.toNumber());
     },
     [counter]
   );
 
   useEffect(() => {
-    if (wallet) {
-      let provider: anchor.Provider;
+    let provider: anchor.Provider;
 
-      try {
-        provider = anchor.getProvider();
-      } catch {
+    try {
+      provider = anchor.getProvider();
+    } catch {
+      if (wallet) {
         provider = new anchor.AnchorProvider(connection, wallet, {});
         anchor.setProvider(provider);
       }
-
-      const program = new anchor.Program(idl as anchor.Idl, PROGRAM_ID);
-      setProgram(program);
-      refreshCount(program);
     }
+
+    const program = new anchor.Program(idl as anchor.Idl, PROGRAM_ID);
+    setProgram(program);
+    refreshCount(program);
   }, [connection, refreshCount, wallet]);
 
   const incrementCount = async () => {
@@ -48,7 +49,7 @@ export const Increment = ({
       const sig = await program.methods
         .increment()
         .accounts({
-          counter,
+          counter: counter,
           user: wallet.publicKey,
         })
         .rpc();
@@ -57,16 +58,18 @@ export const Increment = ({
     }
   };
 
-  const handleRefresh = async () => {
+  const handleRefresh = () => {
     if (program) {
-      await refreshCount(program);
+      refreshCount(program);
     }
   };
 
   return (
     <div>
-      <button onClick={incrementCount}>Increment Counter</button>
-      <button onClick={handleRefresh}>Refresh count</button>
+      <div>
+        <button onClick={incrementCount}>Increment Counter</button>
+        <button onClick={handleRefresh}>Refresh count</button>
+      </div>
       <div>Count: {count}</div>
     </div>
   );
