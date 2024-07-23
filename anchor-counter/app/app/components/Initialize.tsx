@@ -2,6 +2,7 @@
 
 import * as anchor from '@project-serum/anchor';
 import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
+import { Keypair } from '@solana/web3.js';
 import { useEffect, useState } from 'react';
 
 import idl from '../../../target/idl/anchor_counter.json';
@@ -35,20 +36,29 @@ export const Initialize = ({
     setProgram(program);
   }, [connection, wallet]);
 
+  console.log({ program });
+
   const onClick = async () => {
-    if (program) {
-      const newAccount = anchor.web3.Keypair.generate();
+    if (program && wallet) {
+      try {
+        const newAccount = Keypair.generate();
+        console.log({ newAccount });
+        const sig = await program.methods
+          .initialize()
+          .accounts({
+            counter: newAccount.publicKey,
+            // systemProgram: SystemProgram.programId,
+            // user: wallet.publicKey,
+          })
+          .signers([newAccount])
+          .rpc();
 
-      const sig = await program.methods
-        .initialize()
-        .accounts({
-          counter: newAccount.publicKey,
-        })
-        .signers([newAccount])
-        .rpc();
-
-      setTransactionUrl(`https://explorer.solana.com/tx/${sig}?cluster=devnet`);
-      setCounter(newAccount.publicKey);
+        console.log({ sig });
+        setTransactionUrl(`https://explorer.solana.com/tx/${sig}?cluster=devnet`);
+        setCounter(newAccount.publicKey);
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 

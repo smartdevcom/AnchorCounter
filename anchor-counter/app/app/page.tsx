@@ -3,6 +3,7 @@
 import type * as anchor from '@project-serum/anchor';
 import { useWallet } from '@solana/wallet-adapter-react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { AppBar } from './components/AppBar';
@@ -23,7 +24,9 @@ export default function Home() {
       <div>
         {wallet.connected ? (
           counter ? (
-            <Increment counter={counter} setTransactionUrl={setTransactionUrl} />
+            <div>
+              <Increment counter={counter} setTransactionUrl={setTransactionUrl} />
+            </div>
           ) : (
             <Initialize setCounter={setCounter} setTransactionUrl={setTransactionUrl} />
           )
@@ -31,7 +34,9 @@ export default function Home() {
           <div color='white'>Connect Wallet</div>
         )}
         {transactionUrl && (
-          <button onClick={() => console.warn(transactionUrl)}>View most recent transaction</button>
+          <Link color='white' href={transactionUrl}>
+            View most recent transaction
+          </Link>
         )}
       </div>
     </div>
