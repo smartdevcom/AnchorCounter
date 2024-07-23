@@ -11,7 +11,7 @@ anchor_counter = "EJ86psYLABYH6PrBhumSxRTCsBbaF3qXPchjh1xVCPsV"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "https://api.devnet.solana.com"
 wallet = "/home/user/.config/solana/id.json"
 
 [scripts]
