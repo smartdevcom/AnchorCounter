@@ -1,4 +1,11 @@
 use anchor_lang::prelude::*;
+use instructions::*;
+use state::game::Tile;
+
+pub mod constants;
+pub mod error;
+pub mod instructions;
+pub mod state;
 
 declare_id!("EJ86psYLABYH6PrBhumSxRTCsBbaF3qXPchjh1xVCPsV");
 
@@ -7,49 +14,44 @@ pub mod anchor_counter {
   use super::*;
 
   pub fn initialize(_ctx: Context<Initialize>) -> Result<()> {
-    let counter = &mut _ctx.accounts.counter;
-    counter.count = 0;
-    msg!("Counter Account Created");
-    msg!("Current Count: {}", counter.count);
-
-    Ok(())
+    instructions::counter::initialize(_ctx)
   }
 
   pub fn increment(_ctx: Context<Update>) -> Result<()> {
-    let counter = &mut _ctx.accounts.counter;
-    msg!("Previous counter: {}", counter.count);
-    counter.count = counter.count.checked_add(1).unwrap();
-    msg!("Counter incremented. Current count: {}", counter.count);
-    Ok(())
+    instructions::counter::increment(_ctx)
   }
 
   pub fn decrement(_ctx: Context<Update>) -> Result<()> {
-    let counter = &mut _ctx.accounts.counter;
-    msg!("Previous counter: {}", counter.count);
-    counter.count = counter.count.checked_sub(1).unwrap();
-    msg!("Counter decremented. Current count: {}", counter.count);
-    Ok(())
+    instructions::counter::decrement(_ctx)
   }
-}
 
-#[derive(Accounts)]
-pub struct Initialize<'info> {
-  #[account(init, payer = user, space = 8 + 8)]
-  pub counter: Account<'info, Counter>,
+  pub fn add_movie_review(
+    _ctx: Context<AddMovieReview>,
+    title: String,
+    description: String,
+    rating: u8,
+  ) -> Result<()> {
+    instructions::movie_review::add_movie_review(_ctx, title, description, rating)
+  }
 
-  #[account(mut)]
-  pub user: Signer<'info>,
-  pub system_program: Program<'info, System>,
-}
+  pub fn update_movie_review(
+    _ctx: Context<UpdateMovieReview>,
+    title: String,
+    description: String,
+    rating: u8,
+  ) -> Result<()> {
+    instructions::movie_review::update_movie_review(_ctx, title, description, rating)
+  }
 
-#[derive(Accounts)]
-pub struct Update<'info> {
-  #[account(mut)]
-  pub counter: Account<'info, Counter>,
-  pub user: Signer<'info>,
-}
+  pub fn delete_movie_review(_ctx: Context<DeleteMovieReview>, title: String) -> Result<()> {
+    instructions::movie_review::delete_movie_review(_ctx, title)
+  }
 
-#[account]
-pub struct Counter {
-  pub count: u64,
+  pub fn setup_game(_ctx: Context<SetupGame>, player_two: Pubkey) -> Result<()> {
+    instructions::setup_game::setup_game(_ctx, player_two)
+  }
+
+  pub fn play(_ctx: Context<Play>, tile: Tile) -> Result<()> {
+    instructions::play::play(_ctx, tile)
+  }
 }
