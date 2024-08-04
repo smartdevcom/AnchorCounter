@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { headers } from 'next/headers';
+import { ToastContainer } from 'react-toastify';
 import { cookieToInitialState } from 'wagmi';
 
 import { config } from '@/app/config';
@@ -8,6 +9,7 @@ import { CounterContextProvider } from '@/app/context/CounterContextProvider';
 import { ParentWalletContextProvider } from '@/app/context/WalletContextProvider';
 import { Web3ModalProvider } from '@/app/context/Web3ModalProvider';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -32,6 +34,12 @@ export default function RootLayout({
             <CounterContextProvider>{children}</CounterContextProvider>
           </ParentWalletContextProvider>
         </Web3ModalProvider>
+        <ToastContainer
+          toastClassName={
+            'bg-white-600 font-gray-300 relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
+          }
+          autoClose={8000}
+        />
       </body>
     </html>
   );

@@ -3,6 +3,7 @@
 import * as anchor from '@project-serum/anchor';
 import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import idl from '../../../target/idl/anchor_counter.json';
 import { PROGRAM_ID } from '../constants';
@@ -18,6 +19,16 @@ export const Increment = ({
   const [program, setProgram] = useState<anchor.Program>();
   const { connection } = useConnection();
   const wallet = useAnchorWallet();
+
+  const notify = () => {
+    toast.success('Success Notification !', {
+      autoClose: 8000,
+      position: 'top-right',
+      className: 'black-background',
+      bodyClassName: 'grow-font-size',
+      progressClassName: 'fancy-progress-bar',
+    });
+  };
 
   const refreshCount = useCallback(
     async (program: anchor.Program) => {
@@ -69,6 +80,7 @@ export const Increment = ({
       <div>
         <button onClick={incrementCount}>Increment Counter</button>
         <button onClick={handleRefresh}>Refresh count</button>
+        <button onClick={notify}>Notify !</button>
       </div>
       <div>Count: {count}</div>
     </div>

@@ -46,7 +46,7 @@
     "react/self-closing-comp": ["error", { "component": true, "html": true }],
     "react-hooks/exhaustive-deps": "error",
     "react/display-name": "off",
-    "react/jsx-sort-props": "error",
+    // "react/jsx-sort-props": "error",
     "react/prop-types": "off",
     "typescript-sort-keys/interface": "error",
     "typescript-sort-keys/string-enum": "error",
@@ -59,8 +59,8 @@
         "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
         "allowSeparatedGroups": false
       }
-    ],
-    "sort-keys": 0, // disable default eslint sort-keys
-    "sort-keys/sort-keys-fix": 2
+    ]
+    // "sort-keys": 0 // disable default eslint sort-keys
+    // "sort-keys/sort-keys-fix": 2
   }
 }

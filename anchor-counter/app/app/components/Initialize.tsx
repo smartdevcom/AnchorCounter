@@ -36,13 +36,10 @@ export const Initialize = ({
     setProgram(program);
   }, [connection, wallet]);
 
-  console.log({ program });
-
   const onClick = async () => {
     if (program && wallet) {
       try {
         const newAccount = Keypair.generate();
-        console.log({ newAccount });
         const sig = await program.methods
           .initialize()
           .accounts({
@@ -53,7 +50,6 @@ export const Initialize = ({
           .signers([newAccount])
           .rpc();
 
-        console.log({ sig });
         setTransactionUrl(`https://explorer.solana.com/tx/${sig}?cluster=devnet`);
         setCounter(newAccount.publicKey);
       } catch (e) {

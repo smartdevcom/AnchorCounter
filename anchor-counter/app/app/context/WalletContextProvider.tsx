@@ -1,7 +1,7 @@
 'use client';
 
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
-// import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import {
   LedgerWalletAdapter,
   PhantomWalletAdapter,
@@ -9,7 +9,7 @@ import {
   TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
 import * as web3 from '@solana/web3.js';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 import type { ReactNode } from 'react';
 
@@ -17,10 +17,10 @@ import { AutoConnectProvider, useAutoConnect } from '@/app/context/AutoConnectPr
 import { NetworkConfigProvider } from '@/app/context/NetworkConfigProvider';
 require('@solana/wallet-adapter-react-ui/styles.css');
 
-const WalletModalProvider = dynamic(
-  async () => (await import('@solana/wallet-adapter-react-ui')).WalletModalProvider,
-  { ssr: false }
-);
+// const WalletModalProvider = dynamic(
+//   async () => (await import('@solana/wallet-adapter-react-ui')).WalletModalProvider,
+//   { ssr: false }
+// );
 
 const WalletContextProvider = ({ children }: { children: ReactNode }) => {
   const endpoint = web3.clusterApiUrl('devnet');
