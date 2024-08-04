@@ -2,30 +2,21 @@
 
 import * as anchor from '@project-serum/anchor';
 import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import idl from '../../../target/idl/anchor_counter.json';
 import { PROGRAM_ID } from '../constants';
 
-export const Increment = ({
+export const Decrement = ({
   counter,
   setTransactionUrl,
 }: {
   counter: anchor.Address;
   setTransactionUrl: (v: string) => void;
 }) => {
-  const [count, setCount] = useState(0);
   const [program, setProgram] = useState<anchor.Program>();
   const { connection } = useConnection();
   const wallet = useAnchorWallet();
-
-  const refreshCount = useCallback(
-    async (program: anchor.Program) => {
-      const counterAccount = await program.account.counter.fetch(counter);
-      setCount((counterAccount.count as anchor.BN).toNumber());
-    },
-    [counter]
-  );
 
   useEffect(() => {
     let provider: anchor.Provider;
@@ -41,13 +32,12 @@ export const Increment = ({
 
     const program = new anchor.Program(idl as anchor.Idl, PROGRAM_ID);
     setProgram(program);
-    refreshCount(program);
-  }, [connection, refreshCount, wallet]);
+  }, [connection, wallet]);
 
-  const incrementCount = async () => {
+  const decrementCount = async () => {
     if (program && wallet) {
       const sig = await program.methods
-        .increment()
+        .decrement()
         .accounts({
           counter: counter,
           user: wallet.publicKey,
@@ -58,19 +48,11 @@ export const Increment = ({
     }
   };
 
-  const handleRefresh = () => {
-    if (program) {
-      refreshCount(program);
-    }
-  };
-
   return (
     <div>
       <div>
-        <button onClick={incrementCount}>Increment Counter</button>
-        <button onClick={handleRefresh}>Refresh count</button>
+        <button onClick={decrementCount}>Increment Counter</button>
       </div>
-      <div>Count: {count}</div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { AppBar } from './components/AppBar';
+import { Decrement } from './components/Decrement';
 import { Increment } from './components/Increment';
 import { Initialize } from './components/Initialize';
 
@@ -26,6 +27,7 @@ export default function Home() {
           counter ? (
             <div>
               <Increment counter={counter} setTransactionUrl={setTransactionUrl} />
+              <Decrement counter={counter} setTransactionUrl={setTransactionUrl} />
             </div>
           ) : (
             <Initialize setCounter={setCounter} setTransactionUrl={setTransactionUrl} />
