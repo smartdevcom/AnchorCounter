@@ -1,1 +1,1 @@
-export const PROGRAM_ID = `4X3wohHowHuh1rcV9Pjay2nTNhkdcVJGYT6eoYuUL9LC`;
+export const PROGRAM_ID = `9sqmxJ8CAKANCGzv3cXH3D2UnKh9e9DPiSoDsq5EwUo9`;

@@ -4,14 +4,20 @@
 seeds = true
 skip-lint = false
 
+[programs.devnet]
+anchor_counter = "9sqmxJ8CAKANCGzv3cXH3D2UnKh9e9DPiSoDsq5EwUo9"
+
 [programs.localnet]
-anchor_counter = "4X3wohHowHuh1rcV9Pjay2nTNhkdcVJGYT6eoYuUL9LC"
+anchor_counter = "9sqmxJ8CAKANCGzv3cXH3D2UnKh9e9DPiSoDsq5EwUo9"
+
+[programs.mainnet]
+anchor_counter = "9sqmxJ8CAKANCGzv3cXH3D2UnKh9e9DPiSoDsq5EwUo9"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "https://api.devnet.solana.com"
+cluster = "Devnet"
 wallet = "/home/user/.config/solana/id.json"
 
 [scripts]

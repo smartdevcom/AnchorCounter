@@ -7,7 +7,7 @@ pub mod error;
 pub mod instructions;
 pub mod state;
 
-declare_id!("4X3wohHowHuh1rcV9Pjay2nTNhkdcVJGYT6eoYuUL9LC");
+declare_id!("9sqmxJ8CAKANCGzv3cXH3D2UnKh9e9DPiSoDsq5EwUo9");
 
 #[program]
 pub mod anchor_counter {
