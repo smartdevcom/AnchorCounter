@@ -54,4 +54,24 @@ pub mod anchor_counter {
   pub fn play(_ctx: Context<Play>, tile: Tile) -> Result<()> {
     instructions::play::play(_ctx, tile)
   }
+
+  pub fn init_master(_ctx: Context<InitMaster>) -> Result<()> {
+    instructions::lottery::init_master(_ctx)
+  }
+
+  pub fn create_lottery(_ctx: Context<CreateLottery>, _ticket_price: u64) -> Result<()> {
+    instructions::lottery::create_lottery(_ctx, _ticket_price)
+  }
+
+  pub fn buy_ticket(_ctx: Context<BuyTicket>, _lottery_id: u32) -> Result<()> {
+    instructions::lottery::buy_ticket(_ctx, _lottery_id)
+  }
+
+  pub fn pick_winner(_ctx: Context<PickWinner>, _lottery_id: u32) -> Result<()> {
+    instructions::lottery::pick_winner(_ctx, _lottery_id)
+  }
+
+  pub fn claim_prize(_ctx: Context<ClaimPrize>, _lottery_id: u32, _ticket_id: u32) -> Result<()> {
+    instructions::lottery::claim_prize(_ctx, _lottery_id, _lottery_id)
+  }
 }

@@ -25,6 +25,7 @@ describe('anchor-movie-review-program', () => {
     // Add your test here.
     const tx = await program.methods
       .addMovieReview(movie.title, movie.description, movie.rating)
+      .accounts({ movieReview: moviePda })
       .rpc();
 
     const account = await program.account.movieAccountState.fetch(moviePda);
@@ -40,6 +41,7 @@ describe('anchor-movie-review-program', () => {
 
     const tx = await program.methods
       .updateMovieReview(movie.title, newDescription, newRating)
+      .accounts({ movieReview: moviePda })
       .rpc();
 
     const account = await program.account.movieAccountState.fetch(moviePda);
@@ -50,6 +52,9 @@ describe('anchor-movie-review-program', () => {
   });
 
   it('Deletes a movie review', async () => {
-    const tx = await program.methods.deleteMovieReview(movie.title).rpc();
+    const tx = await program.methods
+      .deleteMovieReview(movie.title)
+      .accounts({ movieReview: moviePda })
+      .rpc();
   });
 });
